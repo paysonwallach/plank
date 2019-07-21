@@ -1,0 +1,8 @@
+subdir('Applications')
+subdir('Battery')
+subdir('Clippy')
+subdir('Clock')
+subdir('Calendar')
+subdir('CPUMonitor')
+subdir('Desktop')
+subdir('Trash')
