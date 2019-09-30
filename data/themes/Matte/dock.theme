@@ -1,9 +1,17 @@
-
 [PlankTheme]
 
 [PlankDockTheme]
+# The padding on the left/right dock edges, in tenths of a percent of IconSize.
 HorizPadding=1
+
+# The padding on the top dock edge, in tenths of a percent of IconSize.
 TopPadding=1.5
+
+# The padding on the bottom dock edge, in tenths of a percent of IconSize.
 BottomPadding=2
+
+# The size of the icon-shadow behind every item, in tenths of a percent of IconSize.
 IconShadowSize=0
+
+# Whether background and icons will unhide/hide with different speeds. The top-border of both will leave/hit the screen-edge at the same time.
 CascadeHide=false
