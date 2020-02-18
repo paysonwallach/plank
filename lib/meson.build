@@ -1,4 +1,4 @@
-plank_lib_sources = files(
+plank_lib_sources = [
 	'DBusManager.vala',
 	'DockController.vala',
 	'DockPreferences.vala',
@@ -12,8 +12,8 @@ plank_lib_sources = files(
 	'Docklets/DockletItem.vala',
 	'Docklets/DockletManager.vala',
 	'Drawing/Color.vala',
-	'Drawing/DrawingService.vala',
 	'Drawing/DockTheme.vala',
+	'Drawing/DrawingService.vala',
 	'Drawing/Easing.vala',
 	'Drawing/Enums.vala',
 	'Drawing/Renderer.vala',
@@ -50,8 +50,9 @@ plank_lib_sources = files(
 	'Widgets/DockWindow.vala',
 	'Widgets/HoverWindow.vala',
 	'Widgets/PoofWindow.vala',
-	'Widgets/PreferencesWindow.vala'
-)
+	'Widgets/PreferencesWindow.vala',
+	'Widgets/TitledSeparatorMenuItem.vala',
+]
 
 plank_internal_lib_sources = [
 	'InternalConsts.vala',
@@ -99,7 +100,7 @@ plank_lib = shared_library(
 	include_directories: config_inc_dir,
 	install: true,
 	install_dir: [true, join_paths(get_option('includedir'), 'plank'), true],
-	soversion: '1',
+	soversion: '1.0.0',
 	version : '1.0.0',
 	vala_vapi: 'plank.vapi',
 	vala_header: 'plank.h',
