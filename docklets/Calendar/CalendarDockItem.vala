@@ -128,7 +128,7 @@ namespace Docky
 			//  month
 			if (prefs.ShowMonth) {
 				layout.get_font_description ().set_absolute_size ((int) (12 * surface.Height / 100 * Pango.SCALE));
-				layout.set_text (now.format ("%B"), -1);
+				layout.set_text (now.format ("%B").strip (), -1);
 				layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 				cr.move_to (0, 10 * surface.Height / 100);
@@ -141,7 +141,7 @@ namespace Docky
 			//  day
 			if (prefs.ShowDay) {
 				layout.get_font_description ().set_absolute_size ((int) (9 * surface.Height / 100 * Pango.SCALE));
-				layout.set_text (now.format ("%A"), -1);
+				layout.set_text (now.format ("%A").strip (), -1);
 				layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 				cr.move_to (0, 31.5 * surface.Height / 100);
@@ -153,7 +153,7 @@ namespace Docky
 
 			//  date
 			layout.get_font_description ().set_absolute_size ((int) (42 * surface.Height / 100 * Pango.SCALE));
-			layout.set_text (now.format ("%e"), -1);
+			layout.set_text (now.format ("%e").strip (), -1);
 			layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 			cr.move_to (0, 33 * surface.Height / 100);
