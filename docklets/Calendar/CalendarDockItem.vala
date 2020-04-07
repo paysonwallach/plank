@@ -1,6 +1,6 @@
 //
 //  Copyright (C) 2011 Robert Dyer
-//  
+//
 //  Calendar docklet by Kuravi Hewawasam 2019.
 //
 //  This file is part of Plank.
@@ -28,12 +28,11 @@ namespace Docky
 		File owned_file;
 
 		const string THEME_BASE_URI = "resource://" + Docky.G_RESOURCE_PATH + "/themes/";
-		
+
 		Pango.Layout layout;
 		uint timer_id = 0U;
 		int minute;
 		string current_theme;
-
 
 		/**
 		 * {@inheritDoc}
@@ -42,10 +41,10 @@ namespace Docky
 		{
 			GLib.Object (Prefs: new CalendarPreferences.with_file (file));
 		}
-		
+
 		construct
 		{
-			owned_file = File.new_for_path ("/usr/share/applications/io.elementary.calendar.desktop");
+			owned_file = File.new_for_path ("/usr/share/applications/org.gnome.Calendar.desktop");
 
 			// shared by all text
 			layout = new Pango.Layout (Gdk.pango_context_get ());
@@ -53,9 +52,9 @@ namespace Docky
 			font_description.set_weight (Pango.Weight.BOLD);
 			layout.set_font_description (font_description);
 			layout.set_ellipsize (Pango.EllipsizeMode.NONE);
-			
+
 			Text = "time";
-			
+
 			unowned CalendarPreferences prefs = (CalendarPreferences) Prefs;
 			prefs.notify["ShowMonth"].connect (handle_prefs_changed);
 			prefs.notify["ShowDay"].connect (handle_prefs_changed);
@@ -63,17 +62,17 @@ namespace Docky
 			timer_id = Gdk.threads_add_timeout (1000, (SourceFunc) update_timer);
 			current_theme = THEME_BASE_URI + "Default";
 		}
-		
+
 		~CalendarDockItem ()
 		{
 			if (timer_id > 0U)
 				GLib.Source.remove (timer_id);
-			
+
 			unowned CalendarPreferences prefs = (CalendarPreferences) Prefs;
 			prefs.notify["ShowMonth"].disconnect (handle_prefs_changed);
 			prefs.notify["ShowDay"].disconnect (handle_prefs_changed);
 		}
-		
+
 		bool update_timer ()
 		{
 			var now = new DateTime.now_local ();
@@ -83,7 +82,7 @@ namespace Docky
 			}
 			return true;
 		}
-		
+
 		protected override AnimationType on_clicked (PopupButton button, Gdk.ModifierType mod, uint32 event_time)
 		{
 			if (button == PopupButton.LEFT) {
@@ -92,12 +91,12 @@ namespace Docky
 			}
 			return AnimationType.NONE;
 		}
-		
+
 		void handle_prefs_changed ()
 		{
 			reset_icon_buffer ();
 		}
-		
+
 		protected override void draw_icon (Surface surface)
 		{
 			var now = new DateTime.now_local ();
@@ -105,14 +104,14 @@ namespace Docky
 			var size = int.max (surface.Width, surface.Height);
 			render_calendar (surface, now, size);
 		}
-		
+
 		void render_file_onto_context (Cairo.Context cr, string uri, int size)
 		{
 			var pbuf = DrawingService.load_icon (uri, size, size);
 			Gdk.cairo_set_source_pixbuf (cr, pbuf, 0, 0);
 			cr.paint ();
 		}
-		
+
 		void render_calendar (Surface surface, DateTime now, int size)
 		{
 			unowned CalendarPreferences prefs = (CalendarPreferences) Prefs;
@@ -123,7 +122,7 @@ namespace Docky
 			layout.set_width ((int) (surface.Width * Pango.SCALE));
 
 			Pango.Rectangle ink_rect, logical_rect;
-			
+
 			layout.set_alignment (Pango.Alignment.CENTER);
 
 			//  month
@@ -133,7 +132,7 @@ namespace Docky
 				layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 				cr.move_to (0, 10 * surface.Height / 100);
-				
+
 				Pango.cairo_layout_path (cr, layout);
 				cr.set_source_rgba (19/255, 100/255, 0, 0.4);
 				cr.fill ();
@@ -146,7 +145,7 @@ namespace Docky
 				layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 				cr.move_to (0, 31.5 * surface.Height / 100);
-				
+
 				Pango.cairo_layout_path (cr, layout);
 				cr.set_source_rgba (94/255, 85/255, 60/255, 0.25);
 				cr.fill ();
@@ -154,11 +153,11 @@ namespace Docky
 
 			//  date
 			layout.get_font_description ().set_absolute_size ((int) (42 * surface.Height / 100 * Pango.SCALE));
-			layout.set_text (now.format ("%d"), -1);
+			layout.set_text (now.format ("%e"), -1);
 			layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 			cr.move_to (0, 33 * surface.Height / 100);
-			
+
 			Pango.cairo_layout_path (cr, layout);
 			cr.set_source_rgba (94/255, 85/255, 60/255, 0.25);
 			cr.fill ();
@@ -168,14 +167,14 @@ namespace Docky
 		{
 			unowned CalendarPreferences prefs = (CalendarPreferences) Prefs;
 			var items = new Gee.ArrayList<Gtk.MenuItem> ();
-			
+
 			var checked_item = new Gtk.CheckMenuItem.with_mnemonic (_("Show Day of the Week"));
 			checked_item.active = prefs.ShowDay;
 			checked_item.activate.connect (() => {
 				prefs.ShowDay = !prefs.ShowDay;
 			});
 			items.add (checked_item);
-			
+
 			checked_item = new Gtk.CheckMenuItem.with_mnemonic (_("Show Month"));
 			checked_item.active = prefs.ShowMonth;
 			checked_item.activate.connect (() => {
