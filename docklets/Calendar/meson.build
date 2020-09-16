@@ -14,7 +14,11 @@ docklet_calendar = shared_module(
 	'docklet-calendar',
 	docklet_calendar_sources,
 	docklet_calendar_resources,
-	dependencies: [plank_dep, plank_base_dep],
+	dependencies: [
+		plank_dep,
+		plank_base_dep,
+		dependency ('granite'),
+	],
 	install: true,
 	install_dir: docklets_dir,
 )

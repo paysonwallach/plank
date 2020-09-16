@@ -100,7 +100,9 @@ namespace Docky
 		protected override void draw_icon (Surface surface)
 		{
 			var now = new DateTime.now_local ();
-			Text = now.format ("%a, %b %d %I:%M %p");
+			Text = now.format (
+				string.join (" ", Granite.DateTime.get_default_date_format (true, true),
+				Granite.DateTime.get_default_time_format ())); //"%A, %d %B %I:%M %p");
 			var size = int.max (surface.Width, surface.Height);
 			render_calendar (surface, now, size);
 		}
@@ -128,7 +130,7 @@ namespace Docky
 			//  month
 			if (prefs.ShowMonth) {
 				layout.get_font_description ().set_absolute_size ((int) (16 * surface.Height / 100 * Pango.SCALE));
-				layout.set_text (now.format ("%B").strip (), -1);
+				layout.set_text (now.format ("%b").strip (), -1);
 				layout.get_pixel_extents (out ink_rect, out logical_rect);
 
 				cr.move_to (0, 11 * surface.Height / 100);
